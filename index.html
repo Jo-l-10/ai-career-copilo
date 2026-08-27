@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Career Copilot — 100% Free Low-Code ATS Resume & Job Matcher</title>
+  <meta name="description" content="AI Career Copilot helps students, graduates, and job seekers build ATS-friendly resumes, enhance bullets with X-Y-Z formula, analyze job descriptions, and calculate 0-100% match scores with zero paid subscriptions.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#312e81',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Dexie.js for IndexedDB Local Relational Database -->
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+
+  <!-- html2pdf.js for 100% Free Client-Side ATS PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- Custom Design Tokens & Print Styles -->
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP GLOBAL NAVBAR -->
+  <header class="sticky top-0 z-40 w-full bg-slate-950/85 backdrop-blur-md border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <!-- Logo & Brand -->
+      <a href="#landing" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-violet-500 flex items-center justify-center text-white shadow-lg shadow-indigo-600/30 group-hover:scale-105 transition">
+          <i data-lucide="sparkles" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="text-base font-extrabold text-white tracking-tight flex items-center gap-1.5">
+            AI Career Copilot
+            <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-1.5 py-0.2 rounded font-mono font-bold">FREE</span>
+          </div>
+          <div class="text-[11px] text-slate-400 font-medium">Low-Code Career & ATS Match Platform</div>
+        </div>
+      </a>
+
+      <!-- Center Nav Links -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold">
+        <a href="#landing" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="landing">
+          Home
+        </a>
+        <a href="#dashboard" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="dashboard">
+          Dashboard
+        </a>
+        <a href="#profile" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="profile">
+          Career Profile
+        </a>
+        <a href="#resume-builder" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="resume-builder">
+          Resume Builder
+        </a>
+        <a href="#template-studio" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="template-studio">
+          Templates
+        </a>
+        <a href="#job-match" class="nav-link px-3.5 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 transition" data-route="job-match">
+          Job Matcher
+        </a>
+      </nav>
+
+      <!-- Right AI Status Badge & Settings Trigger -->
+      <div class="flex items-center gap-3">
+        <button id="nav-ai-settings-btn" class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 text-xs font-medium text-slate-300 transition" title="Configure AI Provider (Local Ollama / Groq / Offline NLP)">
+          <span id="ai-status-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span id="ai-status-text">Offline NLP (Free)</span>
+          <i data-lucide="settings" class="w-3.5 h-3.5 text-slate-400 ml-0.5"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APP VIEW CONTAINER -->
+  <main id="app-view-container" class="flex-1"></main>
+
+  <!-- FOOTER -->
+  <footer class="w-full border-t border-slate-800/80 bg-slate-950/90 py-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div>
+        <span class="text-slate-300 font-semibold">AI Career Copilot</span> — 100% Free & Open-Source ATS Optimizer & Job Match Engine.
+        <div class="text-[11px] text-slate-500 mt-0.5">Runs locally with IndexedDB & Local/Free AI. Zero data lock-in.</div>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <a href="#dashboard" class="hover:text-white transition">Dashboard</a>
+        <span>•</span>
+        <a href="#resume-builder" class="hover:text-white transition">ATS Resume</a>
+        <span>•</span>
+        <a href="#job-match" class="hover:text-white transition">Job Analyzer</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Bootstrap -->
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
